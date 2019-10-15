@@ -15,13 +15,13 @@ double get_rand() {
 double get_rand_range(const double& min,const double& max) {
 	return get_rand() * (max - min) + min;
 }
-void getLambda( const int& N, double *L) { // длина свободного пробега нейтрона
+void getLambda( const int& N, double *L) { // Г¤Г«ГЁГ­Г  Г±ГўГ®ГЎГ®Г¤Г­Г®ГЈГ® ГЇГ°Г®ГЎГҐГЈГ  Г­ГҐГ©ГІГ°Г®Г­Г 
 	for (int i = 0; i < N; i++) {
 		double r = get_rand();
 		L[i] = -log(r);
 	}
 }
-int collisionProbability() { //Вероятность рождения N вторичных нейтронов после столкновения
+int collisionProbability() { //Г‚ГҐГ°Г®ГїГІГ­Г®Г±ГІГј Г°Г®Г¦Г¤ГҐГ­ГЁГї N ГўГІГ®Г°ГЁГ·Г­Г»Гµ Г­ГҐГ©ГІГ°Г®Г­Г®Гў ГЇГ®Г±Г«ГҐ Г±ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁГї
 	double p = get_rand_range(0, 1);
 	if (p < 0.83) return 1;
 	if ((p >= 0.83) && (p < 0.9)) return 2;
@@ -34,13 +34,13 @@ struct Neutron {
 	double t;
 	double f;
 	double vt;
-	double vf; //представление координат-импульсов в сферических координатах
+	double vf; //ГЇГ°ГҐГ¤Г±ГІГ ГўГ«ГҐГ­ГЁГҐ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІ-ГЁГ¬ГЇГіГ«ГјГ±Г®Гў Гў Г±ГґГҐГ°ГЁГ·ГҐГ±ГЄГЁГµ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ Гµ
 };
-struct NeutronDec { //представление в декартовых координатах
+struct NeutronDec { //ГЇГ°ГҐГ¤Г±ГІГ ГўГ«ГҐГ­ГЁГҐ Гў Г¤ГҐГЄГ Г°ГІГ®ГўГ»Гµ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ Гµ
 	double x, y, z;
 	double vx, vy, vz;
 };
-void getVdirection(double *vt, double *vf) { //определение направления и скорости движения вторичного нейтрона
+void getVdirection(double *vt, double *vf) { //Г®ГЇГ°ГҐГ¤ГҐГ«ГҐГ­ГЁГҐ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї ГЁ Г±ГЄГ®Г°Г®Г±ГІГЁ Г¤ГўГЁГ¦ГҐГ­ГЁГї ГўГІГ®Г°ГЁГ·Г­Г®ГЈГ® Г­ГҐГ©ГІГ°Г®Г­Г 
 	*vf = get_rand_range(0, 2 * PI);
 	double b = get_rand_range(-1, 1);
 	*vt = acos(b);
@@ -54,7 +54,7 @@ void getb(int *b, int *N) {
 	}
 	*N = SecNtotal;
 }
-void collision(struct Neutron *P, struct Neutron *P2, int *N, int *b) { //обработка столкновения нейтрона с ядром
+void collision(struct Neutron *P, struct Neutron *P2, int *N, int *b) { //Г®ГЎГ°Г ГЎГ®ГІГЄГ  Г±ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁГї Г­ГҐГ©ГІГ°Г®Г­Г  Г± ГїГ¤Г°Г®Г¬
 	int curN = 0;
 	for (int i = 0; i < *N; i++) {
 		for (int j = curN; j < curN + b[i]; j++) {
@@ -67,7 +67,7 @@ void collision(struct Neutron *P, struct Neutron *P2, int *N, int *b) { //обрабо
 	}
 	*N = curN;
 }
-void shift(struct Neutron *P, int N, double *L) { //движение нейтронов
+void shift(struct Neutron *P, int N, double *L) { //Г¤ГўГЁГ¦ГҐГ­ГЁГҐ Г­ГҐГ©ГІГ°Г®Г­Г®Гў
 	struct NeutronDec *P1 = (struct NeutronDec *)malloc(N * sizeof(struct NeutronDec));
 	for (int i = 0; i < N; i++) {
 		P1[i].x = P[i].r*sin(P[i].t)*cos(P[i].f);
@@ -155,15 +155,15 @@ int main(int argc, char** argv) {
 		printf("\n");
 		for (int i = 0; i < 20; i++) {
 			double *L = (double *)calloc(N, sizeof(double));
-			getLambda(N, L); //получение длины свободного пробега
-			shift(P, N, L); //смещение нейтронов
-			int * NewN = cleanCount(P, &N, &count); //исключение нейтронов , улетевших из области ядерной реакции
+			getLambda(N, L); //ГЇГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¤Г«ГЁГ­Г» Г±ГўГ®ГЎГ®Г¤Г­Г®ГЈГ® ГЇГ°Г®ГЎГҐГЈГ 
+			shift(P, N, L); //Г±Г¬ГҐГ№ГҐГ­ГЁГҐ Г­ГҐГ©ГІГ°Г®Г­Г®Гў
+			int * NewN = cleanCount(P, &N, &count); //ГЁГ±ГЄГ«ГѕГ·ГҐГ­ГЁГҐ Г­ГҐГ©ГІГ°Г®Г­Г®Гў , ГіГ«ГҐГІГҐГўГёГЁГµ ГЁГ§ Г®ГЎГ«Г Г±ГІГЁ ГїГ¤ГҐГ°Г­Г®Г© Г°ГҐГ ГЄГ¶ГЁГЁ
 			P = clean(P, &N, count, NewN);
 			int *b = (int *)malloc(N * sizeof(int));
 			int N1 = N;
 			getb(b, &N1);
 			struct Neutron *P2 = (struct Neutron *)malloc(N1 * sizeof(struct Neutron));
-			collision(P, P2, &N, b); //обработка столкновений нейтронов в области ядерной реакции с ядрами
+			collision(P, P2, &N, b); //Г®ГЎГ°Г ГЎГ®ГІГЄГ  Г±ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁГ© Г­ГҐГ©ГІГ°Г®Г­Г®Гў Гў Г®ГЎГ«Г Г±ГІГЁ ГїГ¤ГҐГ°Г­Г®Г© Г°ГҐГ ГЄГ¶ГЁГЁ Г± ГїГ¤Г°Г Г¬ГЁ
 			P = (struct Neutron *)realloc(P, N1 * sizeof(struct Neutron));
 			for (int j = 0; j < N1; j++) {
 				P[j] = P2[j];
@@ -184,7 +184,7 @@ int main(int argc, char** argv) {
 	}
 	getchar();
 	return 0;
-
+s;
 
 
 }
