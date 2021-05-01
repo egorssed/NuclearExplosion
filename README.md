@@ -3,6 +3,7 @@
 En
 
 Simulation of a nuclear explosion.
+
 Initially, there is a sphere in which spontaneous nuclear decays can occur, the products of which are the neutrons we are interested in. Neutrons at birth receive arbitrary directions and velocities, move on the scale of the free path length before colliding with a nucleus or leaving the explosion zone. The calculation is carried out discretely, each iteration is a new generation of neutrons.
 Since in the collision of the nucleus there is a probability of birth of 0 to 4 neutrons, some nuclear reactions may be terminated since all neutrons are absorbed by the nuclei.
 
